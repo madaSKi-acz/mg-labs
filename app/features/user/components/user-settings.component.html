@@ -1,0 +1,36 @@
+<div class="user-settings">
+  <h2>Settings</h2>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="isLoading" class="alert alert-info">
+    Loading settings...
+  </div>
+
+  <form *ngIf="preferences && !isLoading">
+    <div class="form-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="preferences.emailNotifications" name="emailNotifications">
+        Enable Email Notifications
+      </label>
+    </div>
+    <div class="form-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="preferences.smsNotifications" name="smsNotifications">
+        Enable SMS Notifications
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="theme">Theme</label>
+      <select id="theme" [(ngModel)]="preferences.theme" name="theme" class="form-control">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+    <button type="button" (click)="savePreferences()" [disabled]="isSaving" class="btn btn-primary">
+      {{ isSaving ? 'Saving...' : 'Save Settings' }}
+    </button>
+  </form>
+</div>

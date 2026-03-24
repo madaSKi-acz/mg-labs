@@ -1,0 +1,32 @@
+<div class="dashboard-container">
+  <div class="welcome-section">
+    <h1>Welcome to MG Labs</h1>
+    <p *ngIf="!isAuthenticated" class="auth-message">Please log in or explore the application</p>
+    <p *ngIf="isAuthenticated" class="auth-message">You are logged in. Explore the features.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <h3>🛍️ Products</h3>
+      <p>Browse and manage products</p>
+      <a href="/products" class="btn btn-primary">View Products</a>
+    </div>
+
+    <div class="feature-card">
+      <h3>👤 Profile</h3>
+      <p>Manage your profile and settings</p>
+      <a href="/user/profile" class="btn btn-primary">Go to Profile</a>
+    </div>
+
+    <div class="feature-card">
+      <h3>⚙️ Admin</h3>
+      <p>Administrative dashboard and controls</p>
+      <a href="/admin/dashboard" class="btn btn-primary" *ngIf="isAuthenticated">Admin Panel</a>
+      <p *ngIf="!isAuthenticated" class="text-muted">Login required</p>
+    </div>
+  </div>
+
+  <div *ngIf="isAuthenticated" class="action-buttons">
+    <button (click)="logout()" class="btn btn-danger">Logout</button>
+  </div>
+</div>

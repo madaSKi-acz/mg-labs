@@ -1,0 +1,30 @@
+.product-details {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+}
+
+.product-image img {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.price {
+  font-size: 24px;
+  color: #28a745;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.in-stock {
+  color: #28a745;
+}
+
+.low-stock {
+  color: #ffc107;
+}

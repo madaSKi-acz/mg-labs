@@ -1,0 +1,17 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <h1>🚀 MG Labs</h1>
+  </div>
+  <div class="navbar-menu" [class.active]="isMenuOpen">
+    <a (click)="navigateTo('/dashboard')" class="navbar-link">Dashboard</a>
+    <a (click)="navigateTo('/products')" class="navbar-link">Products</a>
+    <a (click)="navigateTo('/admin')" class="navbar-link">Admin</a>
+    <a (click)="navigateTo('/user/profile')" class="navbar-link">Profile</a>
+    <div class="navbar-user" *ngIf="currentUser">
+      <span class="user-name">{{ currentUser.getFullName() }}</span>
+      <span class="user-role">({{ currentUser.role }})</span>
+    </div>
+    <button (click)="logout()" class="btn-logout">Logout</button>
+  </div>
+  <button (click)="toggleMenu()" class="menu-toggle">☰</button>
+</nav>

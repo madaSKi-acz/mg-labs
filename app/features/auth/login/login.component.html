@@ -1,0 +1,136 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <!-- Left Side - Brand Section -->
+    <div class="login-brand">
+      <div class="brand-content">
+        <div class="brand-logo">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" fill="#667eea"/>
+            <text x="50" y="65" text-anchor="middle" font-size="50" font-weight="bold" fill="white">MG</text>
+          </svg>
+        </div>
+        <h2 class="brand-title">MG Labs</h2>
+        <p class="brand-subtitle">Enterprise Application Platform</p>
+        <div class="brand-features">
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Secure Authentication</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Modern Architecture</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">✓</span>
+            <span>Enterprise Ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="login-form-section">
+      <div class="form-wrapper">
+        <div class="form-header">
+          <h1>Welcome Back</h1>
+          <p>Sign in to your account</p>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          <span class="alert-icon">⚠</span>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Login Form -->
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="form">
+          <!-- Email Input -->
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon"> "&#64;"</span>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                class="form-input"
+                placeholder="name@example.com"
+                [class.has-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+              />
+            </div>
+            <span *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched" class="error-text">
+              Email is required
+            </span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched" class="error-text">
+              Please enter a valid email
+            </span>
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-group">
+            <div class="password-header">
+              <label for="password" class="form-label">Password</label>
+              <a (click)="navigateForgotPassword()" class="forgot-password">Forgot?</a>
+            </div>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                formControlName="password"
+                class="form-input"
+                placeholder="Enter your password"
+                [class.has-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+              />
+              <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                {{ showPassword ? '👁️‍🗨️' : '👁' }}
+              </button>
+            </div>
+            <span *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched" class="error-text">
+              Password is required
+            </span>
+            <span *ngIf="loginForm.get('password')?.errors?.['minlength'] && loginForm.get('password')?.touched" class="error-text">
+              Password must be at least 6 characters
+            </span>
+          </div>
+
+          <!-- Remember Me -->
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="rememberMe" formControlName="rememberMe" class="form-checkbox" />
+            <label for="rememberMe" class="checkbox-label">Keep me signed in</label>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="btn-login"
+            [disabled]="loginForm.invalid || isLoading"
+            [class.loading]="isLoading"
+          >
+            {{ isLoading ? 'Signing in...' : 'Sign In' }}
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider">
+          <span>New to MG Labs?</span>
+        </div>
+
+        <!-- Register Link -->
+        <button type="button" class="btn-register" (click)="navigateToRegister()">
+          Create an account
+        </button>
+
+        <!-- Footer -->
+        <div class="form-footer">
+          <p class="footer-text">
+            By signing in, you agree to our
+            <a href="#" class="footer-link">Terms of Service</a>
+            and
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

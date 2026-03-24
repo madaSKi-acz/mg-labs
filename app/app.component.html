@@ -1,0 +1,9 @@
+<div class="app-container" [class.login-layout]="!showLayout">
+  <app-navbar *ngIf="isAuthenticated && showLayout"></app-navbar>
+  <div class="app-content">
+    <app-sidebar *ngIf="isAuthenticated && showLayout" class="sidebar"></app-sidebar>
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
