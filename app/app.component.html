@@ -1,7 +1,9 @@
 <div class="app-container" [class.login-layout]="!showLayout">
-  <app-navbar *ngIf="isAuthenticated && showLayout"></app-navbar>
-  <div class="app-content">
-    <app-sidebar *ngIf="isAuthenticated && showLayout" class="sidebar"></app-sidebar>
+  <app-navbar *ngIf="isAuthenticated && showLayout" [orientation]="menuOrientation"></app-navbar>
+
+  <div class="app-content" [class.full-height]="true" [class.vertical-mode]="menuOrientation === 'vertical'">
+    <app-sidebar *ngIf="isAuthenticated && showLayout && menuOrientation === 'vertical'" class="sidebar"></app-sidebar>
+
     <main class="main-content">
       <router-outlet></router-outlet>
     </main>

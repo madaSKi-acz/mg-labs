@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService, User } from '../../../core/auth.service';
+import { LayoutService } from '../../../core/layout.service';
 
 /**
  * Navbar Component
@@ -14,11 +15,17 @@ import { AuthService, User } from '../../../core/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  @Input() orientation: 'vertical' | 'horizontal' = 'vertical';
+
   currentUser: User | null = null;
   isMenuOpen = false;
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private readonly authService: AuthService, private readonly router: Router) { }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly layoutService: LayoutService
+  ) { }
 
   ngOnInit(): void {
     this.authService.currentUser$.pipe(
@@ -47,6 +54,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
         console.error('Logout failed:', err);
       }
     });
+  }
+
+  /**
+   * Toggle menu orientation (vertical/horizontal)
+   */
+  toggleOrientation(): void {
+    this.layoutService.toggleOrientation();
   }
 
   /**

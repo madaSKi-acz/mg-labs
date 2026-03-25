@@ -1,5 +1,11 @@
 <div class="product-list-container">
-  <h2>Products</h2>
+  <div class="product-list-header">
+    <h2>Products</h2>
+    <div class="header-actions">
+      <span class="cart-count">Cart: {{ cartItemCount }}</span>
+      <button class="btn btn-primary" (click)="navigateNew()">New Product</button>
+    </div>
+  </div>
 
   <div *ngIf="isLoading" class="alert alert-info">
     Loading products...
@@ -14,9 +20,13 @@
       <p [class.in-stock]="product.isInStock()">
         Stock: {{ product.stock }}
       </p>
-      <button [disabled]="!product.isInStock()" class="btn btn-sm btn-primary" (click)="addToCart(product)">
-        Add to Cart
-      </button>
+      <div class="actions">
+        <button [disabled]="!product.isInStock()" class="btn btn-sm btn-primary" (click)="addToCart(product)">
+          Add to Cart
+        </button>
+        <button class="btn btn-sm btn-secondary" (click)="navigateEdit(product.id)">Edit</button>
+        <button class="btn btn-sm btn-danger" (click)="removeProduct(product.id)">Delete</button>
+      </div>
     </div>
   </div>
 </div>

@@ -17,6 +17,19 @@ export class LocalStorageService {
     localStorage.setItem(this.CART_KEY, JSON.stringify(cart));
   }
 
+  // Menu orientation operations
+  getMenuOrientation(): 'vertical' | 'horizontal' {
+    const raw = localStorage.getItem('mg_menu_orientation');
+    if (raw === 'horizontal' || raw === 'vertical') {
+      return raw;
+    }
+    return 'vertical';
+  }
+
+  setMenuOrientation(mode: 'vertical' | 'horizontal'): void {
+    localStorage.setItem('mg_menu_orientation', mode);
+  }
+
   addToCart(product: any): void {
     const cart = this.getCart();
     const existingIndex = cart.findIndex(item => item.id === product.id);

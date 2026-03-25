@@ -69,6 +69,16 @@ button:hover {
   background-color: #e5e5e5;
 }
 
+.btn-danger {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.btn-danger:hover {
+  background-color: #fee2e2;
+}
+
 mat-icon {
   color: var(--light-blue);
 }

@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AuthService } from './core/auth.service';
+import { LayoutService } from './core/layout.service';
 
 /**
  * Root Application Component
@@ -18,11 +19,13 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'MG Labs';
   isAuthenticated = false;
   showLayout = true; // Show navbar/sidebar
+  menuOrientation: 'vertical' | 'horizontal' = 'vertical';
   private readonly subscription: Subscription;
 
   constructor(
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly layoutService: LayoutService
   ) {
     this.subscription = new Subscription();
   }
@@ -30,6 +33,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initializeAuthentication();
     this.monitorRouteChanges();
+    const layoutSub = this.layoutService.orientation$.subscribe(value => {
+      this.menuOrientation = value;
+    });
+    this.subscription.add(layoutSub);
   }
 
   /**

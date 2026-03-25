@@ -1,7 +1,7 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background-color: var(--white);
 }
@@ -14,6 +14,26 @@
   display: flex;
   flex: 1;
   overflow: hidden;
+  min-height: calc(100vh - 70px);
+}
+
+.app-content.full-height .main-content {
+  min-height: calc(100vh - 70px);
+}
+
+.sidebar {
+  width: 260px;
+  background-color: var(--white);
+  border-right: none;
+  box-shadow: 3px 0 20px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  background-color: var(--light-gray);
 }
 
 .sidebar {

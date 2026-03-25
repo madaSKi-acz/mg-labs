@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap, map, throwError, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { MockDataService } from './mock-data.service';
@@ -101,7 +100,6 @@ export class AuthService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly router: Router,
     private readonly mockDataService: MockDataService
   ) {
     this.initializeFromStorage();
@@ -189,14 +187,13 @@ export class AuthService {
   }
 
   /**
-   * Clear authentication data and redirect
+   * Clear authentication data
    */
   private clearAuthData(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
-    this.router.navigate(['/login']);
   }
 
   /**

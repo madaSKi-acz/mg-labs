@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product, ProductService } from '../services/product.service';
 import { LocalStorageService } from '../../../core/local-storage.service';
@@ -23,7 +24,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly productService: ProductService,
-    private readonly localStorageService: LocalStorageService
+    private readonly localStorageService: LocalStorageService,
+    private readonly router: Router
   ) { }
 
   ngOnInit(): void {
@@ -73,6 +75,37 @@ export class ProductListComponent implements OnInit, OnDestroy {
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
     this.loadProducts();
+  }
+
+  /**
+   * Navigate to new product form
+   */
+  navigateNew(): void {
+    this.router.navigate(['/products/new']);
+  }
+
+  /**
+   * Navigate to edit product form
+   */
+  navigateEdit(productId: string): void {
+    this.router.navigate([`/products/edit/${productId}`]);
+  }
+
+  /**
+   * Delete product and refresh list
+   */
+  removeProduct(productId: string): void {
+    this.isLoading = true;
+    const sub = this.productService.delete(productId).subscribe({
+      next: () => {
+        this.loadProducts();
+      },
+      error: (err) => {
+        this.isLoading = false;
+        console.error('Product delete failed:', err);
+      }
+    });
+    this.subscriptions.add(sub);
   }
 
   /**

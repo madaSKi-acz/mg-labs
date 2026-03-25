@@ -1,0 +1,43 @@
+<div class="product-form-container">
+  <h2>{{ isEditMode ? 'Edit Product' : 'Create New Product' }}</h2>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  <div *ngIf="isLoading" class="alert alert-info">Loading...</div>
+
+  <form *ngIf="!isLoading" (ngSubmit)="submit()" #form="ngForm" class="product-form">
+    <div class="field">
+      <label>Name</label>
+      <input type="text" [(ngModel)]="product.name" name="name" required />
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      <textarea rows="4" [(ngModel)]="product.description" name="description" required></textarea>
+    </div>
+
+    <div class="grid-row">
+      <div class="field">
+        <label>Category</label>
+        <input type="text" [(ngModel)]="product.category" name="category" />
+      </div>
+      <div class="field">
+        <label>Price (cents)</label>
+        <input type="number" [(ngModel)]="product.price" name="price" min="0" />
+      </div>
+      <div class="field">
+        <label>Stock</label>
+        <input type="number" [(ngModel)]="product.stock" name="stock" min="0" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Image URL</label>
+      <input type="url" [(ngModel)]="product.imageUrl" name="imageUrl" />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">{{ isEditMode ? 'Save Changes' : 'Create' }}</button>
+      <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

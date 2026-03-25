@@ -1,13 +1,14 @@
 .sidebar {
-  width: 100%;
-  background-color: var(--light-blue);
-  border-right: 1px solid var(--border-color);
-  padding: 24px 0;
+  width: 260px;
+  background-color: var(--white);
+  border-right: none;
+  padding: 18px 0;
+  box-shadow: 4px 0 18px rgba(0, 0, 0, 0.08);
 }
 
 .sidebar-header {
-  padding: 0 24px;
-  margin-bottom: 24px;
+  padding: 0 20px;
+  margin-bottom: 20px;
 }
 
 .sidebar-header h3 {
@@ -36,15 +37,16 @@
 }
 
 .sidebar-link:hover {
-  background-color: var(--white);
-  color: var(--text-primary);
+  background-color: var(--light-blue);
+  color: #1e3a8a;
 }
 
 .sidebar-link.active {
-  background-color: var(--white);
-  color: var(--text-primary);
-  font-weight: 500;
+  background-color: var(--light-blue);
+  color: #1e3a8a;
+  font-weight: 600;
 }
+
 
 .sidebar-link .icon {
   font-size: 20px;
