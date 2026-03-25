@@ -1,143 +1,133 @@
-<div class="page-container">
-  <!-- Header -->
-  <header class="sticky top-0 z-40 w-full border-b border-slate-200/60 bg-white/80 backdrop-blur-md">
-    <div class="flex h-16 items-center justify-between px-6">
-      <div class="flex items-center space-x-4">
-        <h1 class="text-xl font-semibold tracking-tight">Dashboard</h1>
-      </div>
-      <div class="flex items-center space-x-4">
-        <button class="btn btn-secondary">
-          <mat-icon class="text-sm">notifications</mat-icon>
-        </button>
-        <div class="flex items-center space-x-2">
-          <span class="text-sm">{{ currentUser?.getFullName() || 'Admin' }}</span>
-          <button *ngIf="currentUser" (click)="logout()" class="btn btn-danger">Logout</button>
+<div class="min-h-screen bg-slate-50">
+  <header class="sticky top-0 z-40 h-16 border-b border-slate-200/60 bg-white/80 backdrop-blur-md px-6 flex items-center justify-between">
+      <h1 class="text-lg font-semibold tracking-tight text-slate-900">Dashboard</h1>
+      @if (currentUser) {
+        <div class="flex items-center gap-3">
+          <span class="text-sm text-slate-700">{{ currentUser.getFullName() }}</span>
+          <button (click)="logout()" class="px-3 py-1.5 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700 transition">Logout</button>
         </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="py-8">
-    <!-- Welcome Section -->
-    <section class="mb-8">
-      <div class="card p-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <h1 class="text-3xl font-semibold tracking-tight">Welcome back, {{ currentUser?.getFullName() || 'Admin' }}</h1>
-            <p class="mt-1 text-sm text-muted-foreground">Your service analytics at a glance.</p>
-          </div>
-          <div class="flex space-x-2">
-            <button (click)="navigateTo('/products')" class="btn btn-primary">Browse Products</button>
-            <button (click)="navigateTo('/user/profile')" class="btn btn-secondary">Profile</button>
-          </div>
+      }
+    </header>
+  <main class="overflow-y-auto p-6">
+    <section class="mb-8 bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-3xl font-semibold tracking-tight text-slate-900">Welcome back, {{ currentUser?.getFullName() || 'Admin' }}</h2>
+          <p class="text-sm text-slate-500 mt-1">Your service analytics at a glance.</p>
+        </div>
+        <div class="space-x-2">
+          <button (click)="navigateTo('/products')" class="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm hover:bg-indigo-700 transition">Browse Products</button>
+          <button (click)="navigateTo('/user/profile')" class="px-4 py-2 rounded-lg border border-slate-300 text-sm hover:bg-slate-100 transition">Profile</button>
         </div>
       </div>
     </section>
 
-    <!-- Stats Grid -->
     <section class="mb-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="card p-4">
-          <div class="flex items-center space-x-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
-              <mat-icon class="text-blue-600">shopping_cart</mat-icon>
+        <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-5">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-blue-100">
+              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" /></svg>
             </div>
             <div>
-              <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider">Total Products</p>
-              <p class="text-2xl font-bold">{{ totalProducts }}</p>
-              <p class="text-xs text-green-600 font-medium">+12% from last month</p>
+              <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Products</p>
+              <p class="text-2xl font-bold text-slate-900">{{ totalProducts }}</p>
+              <span class="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">+12%</span>
             </div>
           </div>
         </div>
-        <div class="card p-4">
-          <div class="flex items-center space-x-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100">
-              <mat-icon class="text-green-600">people</mat-icon>
+        <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-5">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-100">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             </div>
             <div>
-              <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider">Active Users</p>
-              <p class="text-2xl font-bold">{{ totalUsers }}</p>
-              <p class="text-xs text-green-600 font-medium">+8% from last month</p>
+              <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Active Users</p>
+              <p class="text-2xl font-bold text-slate-900">{{ totalUsers }}</p>
+              <span class="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">+8%</span>
             </div>
           </div>
         </div>
-        <div class="card p-4">
-          <div class="flex items-center space-x-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100">
-              <mat-icon class="text-purple-600">attach_money</mat-icon>
+        <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-5">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-purple-100">
+              <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3h-1l1 4h4v-4h1c0-1.657-1.343-3-3-3z" /></svg>
             </div>
             <div>
-              <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider">Revenue</p>
-              <p class="text-2xl font-bold">${{ totalRevenue | number }}</p>
-              <p class="text-xs text-green-600 font-medium">+15% from last month</p>
+              <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Revenue</p>
+              <p class="text-2xl font-bold text-slate-900">${{ totalRevenue | number }}</p>
+              <span class="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">+15%</span>
             </div>
           </div>
         </div>
-        <div class="card p-4">
-          <div class="flex items-center space-x-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100">
-              <mat-icon class="text-orange-600">local_shipping</mat-icon>
+        <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-5">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-orange-100">
+              <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16l2-2 4 4 8-8 2 2" /></svg>
             </div>
             <div>
-              <p class="text-xs font-medium text-muted-foreground uppercase tracking-wider">Active Orders</p>
-              <p class="text-2xl font-bold">{{ activeOrders }}</p>
-              <p class="text-xs text-red-600 font-medium">-3% from last month</p>
+              <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Active Orders</p>
+              <p class="text-2xl font-bold text-slate-900">{{ activeOrders }}</p>
+              <span class="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-rose-50 text-rose-700">-3%</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Quick Actions -->
     <section class="mb-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="card p-4">
-          <h3 class="text-lg font-semibold">Manage products</h3>
-          <p class="text-sm text-muted-foreground">Add or edit inventory with consolidated controls.</p>
+        <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-4">
+          <h3 class="text-lg font-semibold text-slate-900">Manage products</h3>
+          <p class="text-sm text-slate-500 mt-1">Add or edit inventory with consolidated controls.</p>
         </div>
-        <div class="card p-4">
-          <h3 class="text-lg font-semibold">User tracking</h3>
-          <p class="text-sm text-muted-foreground">Monitor active users and usage insights.</p>
+        <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-4">
+          <h3 class="text-lg font-semibold text-slate-900">User tracking</h3>
+          <p class="text-sm text-slate-500 mt-1">Monitor active users and usage insights.</p>
         </div>
-        <div class="card p-4">
-          <h3 class="text-lg font-semibold">Growth insights</h3>
-          <p class="text-sm text-muted-foreground">Revenue trend view and performance analytics.</p>
+        <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-4">
+          <h3 class="text-lg font-semibold text-slate-900">Growth insights</h3>
+          <p class="text-sm text-slate-500 mt-1">Revenue trend view and performance analytics.</p>
         </div>
       </div>
     </section>
 
-    <!-- Recent Products -->
     <section>
       <div class="flex items-center justify-between mb-4">
-        <h2 class="text-xl font-semibold tracking-tight">Recent Products</h2>
-        <button (click)="navigateTo('/products')" class="btn btn-secondary">View All</button>
+        <h2 class="text-xl font-semibold tracking-tight text-slate-900">Recent Products</h2>
+        <button (click)="navigateTo('/products')" class="px-4 py-2 text-sm font-medium border border-slate-300 rounded-lg hover:bg-slate-100 transition">View All</button>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <div *ngFor="let product of recentProducts" class="card p-4">
-          <div class="aspect-[4/3] bg-slate-100 rounded-lg mb-3 relative">
-            <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover rounded-lg">
-            <div class="absolute top-2 right-2 bg-white px-2 py-1 rounded text-sm font-semibold shadow-sm">
-              {{ product.price | currency }}
+        @for (product of recentProducts; track product.id) {
+          <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-4 relative group">
+            <div class="aspect-[4/3] bg-slate-100 rounded-lg mb-3 overflow-hidden">
+              <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-full object-cover" />
+              <div class="absolute top-2 right-2 bg-white px-2 py-1 rounded text-xs font-semibold shadow-sm">{{ product.price | currency }}</div>
+            </div>
+            <h3 class="font-semibold text-slate-900">{{ product.name }}</h3>
+            <p class="text-sm text-slate-500 line-clamp-2">{{ product.description }}</p>
+            <div class="mt-3 flex justify-between items-center">
+              <span class="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-slate-100 text-slate-600">{{ product.category }}</span>
+              <span class="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">{{ product.isInStock() ? 'In Stock' : 'Out of Stock' }}</span>
+            </div>
+            <div class="mt-4 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button (click)="navigateTo('/products/edit/' + product.id)" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+              </button>
+              <button class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200" title="Delete">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+              </button>
             </div>
           </div>
-          <h3 class="font-semibold">{{ product.name }}</h3>
-          <p class="text-sm text-muted-foreground">{{ product.description }}</p>
-          <div class="flex justify-end space-x-2 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <button class="btn btn-secondary btn-sm">
-              <mat-icon class="text-sm">edit</mat-icon>
-            </button>
-            <button class="btn btn-danger btn-sm">
-              <mat-icon class="text-sm">delete</mat-icon>
-            </button>
+        }
+
+        @if (loading) {
+          <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-4 animate-pulse">
+            <div class="aspect-[4/3] bg-slate-200 rounded-lg mb-3"></div>
+            <div class="h-4 bg-slate-200 rounded mb-2"></div>
+            <div class="h-3 bg-slate-200 rounded"></div>
           </div>
-        </div>
-        <!-- Skeleton Loaders -->
-        <div *ngIf="loading" class="card p-4 animate-pulse">
-          <div class="aspect-[4/3] bg-slate-200 rounded-lg mb-3"></div>
-          <div class="h-4 bg-slate-200 rounded mb-2"></div>
-          <div class="h-3 bg-slate-200 rounded"></div>
-        </div>
+        }
       </div>
     </section>
   </main>

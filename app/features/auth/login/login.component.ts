@@ -9,10 +9,22 @@ import { AuthService } from '../../../core/auth.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
-      <div class="w-full max-w-md">
-        <!-- Header -->
-        <div class="text-center mb-8">
+    <div class="min-h-screen grid grid-cols-1 md:grid-cols-2">
+      <!-- Branding / visual panel -->
+      <div class="hidden md:flex items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 p-8">
+        <div class="max-w-sm text-center">
+          <div class="mx-auto w-24 h-24 rounded-3xl bg-white/10 backdrop-blur-lg flex items-center justify-center mb-6">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v6h6v-6c0-1.657-1.343-3-3-3z"/></svg>
+          </div>
+          <h2 class="text-3xl font-semibold text-white tracking-tight mb-2">MG Labs</h2>
+          <p class="text-slate-300">A premium product operations suite with real-time inventory controls.</p>
+        </div>
+      </div>
+
+      <!-- Login card -->
+      <div class="flex items-center justify-center bg-white p-6">
+        <div class="w-full max-w-md">
+          <div class="text-center mb-8">
           <div class="inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl mb-6">
             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
@@ -224,8 +236,10 @@ export class LoginComponent {
   }
 
   demoLogin(email: string, password: string): void {
-    this.loginForm.patchValue({ email, password, rememberMe: false });
-    this.onLogin();
+    this.loginForm.patchValue({ email, password, rememberMe: true });
+    // Populate fields, but do not auto-submit so user can confirm or adjust credentials.
+    // If instant login is desired, uncomment next line.
+    // this.onLogin();
   }
 
   navigateToRegister(): void {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -7,23 +7,30 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <aside class="w-64 bg-slate-900/95 backdrop-blur-md border-r border-slate-700/50 h-screen fixed left-0 top-16 z-30">
-      <nav class="p-4">
-        <!-- General Section -->
+    <aside
+      [class.w-16]="collapsed"
+      [class.w-64]="!collapsed"
+      class="h-screen border-r border-slate-200 bg-white transition-all duration-300 overflow-hidden"
+    >
+      <nav class="p-3">
         <div class="mb-6">
-          <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">General</p>
+          <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+            General
+          </p>
           <ul class="space-y-1">
             @for (item of generalItems; track item.link) {
               <li>
                 <a
                   [routerLink]="item.link"
-                  routerLinkActive="active"
-                  class="sidebar-link"
+                  routerLinkActive="text-indigo-600 bg-indigo-50"
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 whitespace-nowrap"
                 >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path [attr.d]="item.icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                  </svg>
-                  <span>{{ item.label }}</span>
+                  <span class="text-slate-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path [attr.d]="item.icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                  </span>
+                  <span [class.opacity-0]="collapsed" [class.translate-x-2]="collapsed" class="transition-all duration-200">{{ item.label }}</span>
                 </a>
               </li>
             }
@@ -32,19 +39,21 @@ import { RouterModule } from '@angular/router';
 
         <!-- Management Section -->
         <div>
-          <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Management</p>
+          <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Management</p>
           <ul class="space-y-1">
             @for (item of managementItems; track item.link) {
               <li>
                 <a
                   [routerLink]="item.link"
-                  routerLinkActive="active"
-                  class="sidebar-link"
+                  routerLinkActive="text-indigo-600 bg-indigo-50"
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 whitespace-nowrap"
                 >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path [attr.d]="item.icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                  </svg>
-                  <span>{{ item.label }}</span>
+                  <span class="text-slate-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path [attr.d]="item.icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                  </span>
+                  <span [class.opacity-0]="collapsed" [class.translate-x-2]="collapsed" class="transition-all duration-200">{{ item.label }}</span>
                 </a>
               </li>
             }
@@ -53,22 +62,11 @@ import { RouterModule } from '@angular/router';
       </nav>
     </aside>
   `,
-  styles: [`
-    .sidebar-link {
-      @apply flex items-center space-x-3 px-3 py-2 text-sm font-medium text-slate-300 rounded-lg transition-all duration-300 hover:bg-slate-800 hover:text-white relative;
-    }
-
-    .sidebar-link.active {
-      @apply bg-blue-600 text-white;
-    }
-
-    .sidebar-link.active::before {
-      content: '';
-      @apply absolute left-0 top-0 bottom-0 w-1 bg-blue-400 rounded-r;
-    }
-  `]
+  styles: []
 })
+
 export class SidebarComponent {
+  @Input() collapsed = false;
 
   generalItems = [
     {

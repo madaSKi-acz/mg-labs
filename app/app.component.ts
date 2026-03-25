@@ -1,29 +1,26 @@
 import { Component, inject, signal, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AuthService, User } from './core/auth.service';
-import { LayoutService } from './core/layout.service';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   standalone: true,
-  imports: [SidebarComponent, RouterOutlet]
+  imports: [SidebarComponent, RouterModule]
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'MG Labs';
 
   private authService = inject(AuthService);
   private router = inject(Router);
-  private layoutService = inject(LayoutService);
 
   isAuthenticated = signal<boolean>(false);
   showLayout = signal<boolean>(true);
-  menuOrientation = signal<'vertical' | 'horizontal'>('vertical');
+  isSidebarCollapsed = signal<boolean>(false);
   currentUser = signal<User | null>(null);
 
   private subscription = new Subscription();
@@ -31,11 +28,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initializeAuthentication();
     this.monitorRouteChanges();
-
-    const layoutSub = this.layoutService.orientation$.subscribe(value => {
-      this.menuOrientation.set(value);
-    });
-    this.subscription.add(layoutSub);
   }
 
   private initializeAuthentication(): void {
@@ -54,17 +46,14 @@ export class AppComponent implements OnInit, OnDestroy {
     const sub = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        // Hide layout on auth routes
         const url = event.urlAfterRedirects;
         this.showLayout.set(!url.includes('/auth/'));
       });
     this.subscription.add(sub);
   }
 
-  toggleOrientation(): void {
-    const newOrientation = this.menuOrientation() === 'vertical' ? 'horizontal' : 'vertical';
-    this.menuOrientation.set(newOrientation);
-    this.layoutService.setOrientation(newOrientation);
+  toggleSidebar(): void {
+    this.isSidebarCollapsed.update(value => !value);
   }
 
   logout(): void {

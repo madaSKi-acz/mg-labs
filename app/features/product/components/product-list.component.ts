@@ -46,7 +46,7 @@ import { LocalStorageService } from '../../../core/local-storage.service';
         <!-- Products Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           @for (product of products(); track product.id) {
-            <div class="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group">
+            <div class="bg-white ring-1 ring-slate-200/50 shadow-sm rounded-xl p-5 hover:shadow-md transition-all duration-300 group">
               <!-- Product Image -->
               <div class="aspect-[4/3] bg-slate-100 rounded-lg mb-4 relative overflow-hidden">
                 <img
@@ -70,21 +70,29 @@ import { LocalStorageService } from '../../../core/local-storage.service';
               <div class="space-y-2">
                 <h3 class="font-semibold text-lg text-slate-900">{{ product.name }}</h3>
                 <p class="text-sm text-slate-600 line-clamp-2">{{ product.description }}</p>
-                <div class="flex items-center justify-between text-sm">
-                  <span [class]="product.isInStock() ? 'text-green-600' : 'text-red-600'">
-                    {{ product.isInStock() ? 'In Stock' : 'Out of Stock' }} ({{ product.stock }})
-                  </span>
-                  <span class="text-slate-500">{{ product.category }}</span>
+                <div class="flex flex-wrap gap-2 mt-1">
+                  <span class="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-slate-100 text-slate-700">{{ product.category }}</span>
+                  <span class="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full {{ product.isInStock() ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700' }}">{{ product.isInStock() ? 'In Stock' : 'Out of Stock' }}</span>
+                  @if (product.isLowStock()) {
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-amber-50 text-amber-700">Low Stock</span>
+                  }
                 </div>
               </div>
 
               <!-- Actions -->
-              <div class="flex items-center justify-between mt-4 pt-4 border-t border-slate-200/60">
-                <div class="flex space-x-2">
+              <div class="mt-4 pt-4 border-t border-slate-200/60 space-y-2">
+                <button
+                  (click)="addToCart(product)"
+                  [disabled]="!product.isInStock()"
+                  class="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 text-white text-sm font-medium rounded-lg transition-all duration-300 active:scale-95 disabled:cursor-not-allowed"
+                >
+                  Add to Cart
+                </button>
+                <div class="flex justify-end gap-2">
                   <button
                     (click)="navigateEdit(product.id)"
-                    class="p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-300 active:scale-95"
                     title="Edit Product"
+                    class="p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-300 active:scale-95"
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -92,22 +100,14 @@ import { LocalStorageService } from '../../../core/local-storage.service';
                   </button>
                   <button
                     (click)="deleteProduct(product.id)"
-                    class="p-2 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-300 active:scale-95"
                     title="Delete Product"
+                    class="p-2 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-300 active:scale-95"
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                     </svg>
                   </button>
                 </div>
-
-                <button
-                  (click)="addToCart(product)"
-                  [disabled]="!product.isInStock()"
-                  class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 text-white text-sm font-medium rounded-lg transition-all duration-300 active:scale-95 disabled:cursor-not-allowed"
-                >
-                  Add to Cart
-                </button>
               </div>
             </div>
           }
