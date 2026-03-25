@@ -14,7 +14,7 @@
       <p [class.in-stock]="product.isInStock()">
         Stock: {{ product.stock }}
       </p>
-      <button [disabled]="!product.isInStock()" class="btn btn-sm btn-primary">
+      <button [disabled]="!product.isInStock()" class="btn btn-sm btn-primary" (click)="addToCart(product)">
         Add to Cart
       </button>
     </div>

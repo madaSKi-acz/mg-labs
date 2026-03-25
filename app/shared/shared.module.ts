@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DebounceDirective } from './directives/debounce.directive';
@@ -19,14 +21,20 @@ import { SafeHtmlPipe, CurrencyFormatterPipe, TruncatePipe } from './pipes/custo
     CurrencyFormatterPipe,
     TruncatePipe
   ],
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatIconModule
+  ],
   exports: [
     NavbarComponent,
     SidebarComponent,
     DebounceDirective,
     SafeHtmlPipe,
     CurrencyFormatterPipe,
-    TruncatePipe
+    TruncatePipe,
+    RouterModule,
+    MatIconModule
   ]
 })
 export class SharedModule { }

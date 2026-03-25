@@ -6,22 +6,31 @@
   </div>
 
   <div class="features-grid">
-    <div class="feature-card">
-      <h3>🛍️ Products</h3>
+    <div class="feature-card card">
+      <div class="card-header">
+        <mat-icon class="card-icon">shopping_cart</mat-icon>
+        <h3>Products</h3>
+      </div>
       <p>Browse and manage products</p>
-      <a href="/products" class="btn btn-primary">View Products</a>
+      <button (click)="navigateTo('/products')" class="btn btn-primary">View Products</button>
     </div>
 
-    <div class="feature-card">
-      <h3>👤 Profile</h3>
+    <div class="feature-card card">
+      <div class="card-header">
+        <mat-icon class="card-icon">person</mat-icon>
+        <h3>Profile</h3>
+      </div>
       <p>Manage your profile and settings</p>
-      <a href="/user/profile" class="btn btn-primary">Go to Profile</a>
+      <button (click)="navigateTo('/user/profile')" class="btn btn-primary">Go to Profile</button>
     </div>
 
-    <div class="feature-card">
-      <h3>⚙️ Admin</h3>
+    <div class="feature-card card">
+      <div class="card-header">
+        <mat-icon class="card-icon">admin_panel_settings</mat-icon>
+        <h3>Admin</h3>
+      </div>
       <p>Administrative dashboard and controls</p>
-      <a href="/admin/dashboard" class="btn btn-primary" *ngIf="isAuthenticated">Admin Panel</a>
+      <button (click)="navigateTo('/admin')" class="btn btn-primary" *ngIf="isAuthenticated">Admin Panel</button>
       <p *ngIf="!isAuthenticated" class="text-muted">Login required</p>
     </div>
   </div>

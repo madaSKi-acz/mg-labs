@@ -4,24 +4,21 @@
     <div class="login-brand">
       <div class="brand-content">
         <div class="brand-logo">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" fill="#667eea"/>
-            <text x="50" y="65" text-anchor="middle" font-size="50" font-weight="bold" fill="white">MG</text>
-          </svg>
+          <mat-icon class="logo-icon">science</mat-icon>
         </div>
         <h2 class="brand-title">MG Labs</h2>
         <p class="brand-subtitle">Enterprise Application Platform</p>
         <div class="brand-features">
           <div class="feature">
-            <span class="feature-icon">✓</span>
+            <mat-icon class="feature-icon">check_circle</mat-icon>
             <span>Secure Authentication</span>
           </div>
           <div class="feature">
-            <span class="feature-icon">✓</span>
+            <mat-icon class="feature-icon">architecture</mat-icon>
             <span>Modern Architecture</span>
           </div>
           <div class="feature">
-            <span class="feature-icon">✓</span>
+            <mat-icon class="feature-icon">business</mat-icon>
             <span>Enterprise Ready</span>
           </div>
         </div>
@@ -38,7 +35,7 @@
 
         <!-- Error Message -->
         <div *ngIf="errorMessage" class="alert alert-danger">
-          <span class="alert-icon">⚠</span>
+          <mat-icon class="alert-icon">warning</mat-icon>
           {{ errorMessage }}
         </div>
 
@@ -48,7 +45,7 @@
           <div class="form-group">
             <label for="email" class="form-label">Email Address</label>
             <div class="input-wrapper">
-              <span class="input-icon"> "&#64;"</span>
+              <mat-icon class="input-icon">email</mat-icon>
               <input
                 type="email"
                 id="email"
@@ -73,7 +70,7 @@
               <a (click)="navigateForgotPassword()" class="forgot-password">Forgot?</a>
             </div>
             <div class="input-wrapper">
-              <span class="input-icon">🔒</span>
+              <mat-icon class="input-icon">lock</mat-icon>
               <input
                 [type]="showPassword ? 'text' : 'password'"
                 id="password"
@@ -83,7 +80,7 @@
                 [class.has-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
               />
               <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
-                {{ showPassword ? '👁️‍🗨️' : '👁' }}
+                <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
             </div>
             <span *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched" class="error-text">
@@ -110,6 +107,15 @@
             {{ isLoading ? 'Signing in...' : 'Sign In' }}
           </button>
         </form>
+
+        <!-- Demo Login Section -->
+        <div class="demo-login">
+          <p class="demo-text">Demo Accounts:</p>
+          <div class="demo-buttons">
+            <button (click)="demoLogin('admin@mg.com', 'admin123')" class="btn-demo">Admin Login</button>
+            <button (click)="demoLogin('jane@mg.com', 'user123')" class="btn-demo">User Login</button>
+          </div>
+        </div>
 
         <!-- Divider -->
         <div class="divider">

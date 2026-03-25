@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product, ProductService } from '../services/product.service';
+import { LocalStorageService } from '../../../core/local-storage.service';
 
 /**
  * Product List Component
@@ -17,12 +18,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
   currentPage = 1;
   pageSize = 10;
   selectedCategory: string | null = null;
+  cartItemCount = 0;
   private readonly subscriptions = new Subscription();
 
-  constructor(private readonly productService: ProductService) { }
+  constructor(
+    private readonly productService: ProductService,
+    private readonly localStorageService: LocalStorageService
+  ) { }
 
   ngOnInit(): void {
     this.loadProducts();
+    this.updateCartCount();
   }
 
   /**
@@ -43,6 +49,22 @@ export class ProductListComponent implements OnInit, OnDestroy {
         }
       });
     this.subscriptions.add(sub);
+  }
+
+  /**
+   * Add product to cart
+   */
+  addToCart(product: Product): void {
+    this.localStorageService.addToCart(product);
+    this.updateCartCount();
+  }
+
+  /**
+   * Update cart item count
+   */
+  private updateCartCount(): void {
+    const cart = this.localStorageService.getCart();
+    this.cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
   }
 
   /**

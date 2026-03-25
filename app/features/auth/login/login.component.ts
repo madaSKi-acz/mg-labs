@@ -73,6 +73,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.showPassword = !this.showPassword;
   }
 
+  demoLogin(email: string, password: string): void {
+    this.loginForm.patchValue({ email, password, rememberMe: false });
+    this.onLogin();
+  }
+
   navigateToRegister(): void {
     this.router.navigate(['/register']);
   }

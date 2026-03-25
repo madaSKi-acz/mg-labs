@@ -3,8 +3,8 @@
     <h3>Navigation</h3>
   </div>
   <nav class="sidebar-nav">
-    <a *ngFor="let item of menuItems" [href]="item.link" class="sidebar-link">
-      <span class="icon">{{ item.icon }}</span>
+    <a *ngFor="let item of menuItems" [routerLink]="item.link" class="sidebar-link" routerLinkActive="active">
+      <mat-icon class="icon">{{ item.icon }}</mat-icon>
       <span class="label">{{ item.label }}</span>
     </a>
   </nav>

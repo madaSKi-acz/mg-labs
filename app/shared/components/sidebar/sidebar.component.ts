@@ -11,10 +11,10 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
   menuItems = [
-    { label: 'Dashboard', icon: '📊', link: '/dashboard' },
-    { label: 'Products', icon: '🛍️', link: '/products' },
-    { label: 'Users', icon: '👥', link: '/admin' },
-    { label: 'Profile', icon: '👤', link: '/user/profile' },
-    { label: 'Settings', icon: '⚙️', link: '/user/settings' }
+    { label: 'Dashboard', icon: 'dashboard', link: '/dashboard' },
+    { label: 'Products', icon: 'shopping_cart', link: '/products' },
+    { label: 'Users', icon: 'people', link: '/admin' },
+    { label: 'Profile', icon: 'person', link: '/user/profile' },
+    { label: 'Settings', icon: 'settings', link: '/user/settings' }
   ];
 }

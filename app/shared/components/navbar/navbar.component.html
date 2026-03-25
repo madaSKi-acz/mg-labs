@@ -1,6 +1,6 @@
 <nav class="navbar">
   <div class="navbar-brand">
-    <h1>🚀 MG Labs</h1>
+    <h1>MG Labs</h1>
   </div>
   <div class="navbar-menu" [class.active]="isMenuOpen">
     <a (click)="navigateTo('/dashboard')" class="navbar-link">Dashboard</a>
@@ -13,5 +13,7 @@
     </div>
     <button (click)="logout()" class="btn-logout">Logout</button>
   </div>
-  <button (click)="toggleMenu()" class="menu-toggle">☰</button>
+  <button (click)="toggleMenu()" class="menu-toggle">
+    <mat-icon>menu</mat-icon>
+  </button>
 </nav>

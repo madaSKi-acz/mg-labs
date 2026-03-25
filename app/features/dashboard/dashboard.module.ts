@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
+import { SharedModule } from '../../shared/shared.module';
 
 /**
  * Dashboard Module
@@ -8,7 +9,7 @@ import { DashboardComponent } from './dashboard.component';
  */
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, SharedModule],
   exports: [DashboardComponent]
 })
 export class DashboardModule { }

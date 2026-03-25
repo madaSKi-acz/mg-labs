@@ -4,5 +4,6 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api',
-  appName: 'MG Labs (Dev)'
+  appName: 'MG Labs (Dev)',
+  useMock: true
 };

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap, map, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, tap, map, throwError, of } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { MockDataService } from './mock-data.service';
 
 /**
  * Authentication Token
@@ -97,7 +99,11 @@ export class AuthService {
   currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private readonly http: HttpClient, private readonly router: Router) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly router: Router,
+    private readonly mockDataService: MockDataService
+  ) {
     this.initializeFromStorage();
   }
 
@@ -116,6 +122,17 @@ export class AuthService {
    * Login user with credentials
    */
   login(credentials: LoginCredentials): Observable<User> {
+    if (environment.useMock) {
+      return this.mockDataService.login(credentials.email, credentials.password).pipe(
+        tap(({ tokens, user }) => {
+          this.storeTokens(tokens);
+          this.currentUserSubject.next(user);
+          this.isAuthenticatedSubject.next(true);
+        }),
+        map(({ user }) => user)
+      );
+    }
+
     return this.http
       .post<any>(`${this.apiUrl}/login`, credentials)
       .pipe(
@@ -133,6 +150,17 @@ export class AuthService {
    * Register new user
    */
   register(userData: any): Observable<User> {
+    if (environment.useMock) {
+      return this.mockDataService.register(userData).pipe(
+        tap(({ tokens, user }) => {
+          this.storeTokens(tokens);
+          this.currentUserSubject.next(user);
+          this.isAuthenticatedSubject.next(true);
+        }),
+        map(({ user }) => user)
+      );
+    }
+
     return this.http
       .post<any>(`${this.apiUrl}/register`, userData)
       .pipe(
@@ -150,6 +178,11 @@ export class AuthService {
    * Logout user
    */
   logout(): Observable<any> {
+    if (environment.useMock) {
+      this.clearAuthData();
+      return of(undefined);
+    }
+
     return this.http.post(`${this.apiUrl}/logout`, {}).pipe(
       tap(() => this.clearAuthData())
     );
@@ -187,6 +220,13 @@ export class AuthService {
    * Fetch current user from API
    */
   fetchCurrentUser(): Observable<User> {
+    if (environment.useMock) {
+      return this.mockDataService.getCurrentUser().pipe(
+        tap(user => this.currentUserSubject.next(user)),
+        map(user => user)
+      );
+    }
+
     return this.http.get<any>(`${this.apiUrl}/me`).pipe(
       tap(({ data }: any) => this.currentUserSubject.next(new User(data))),
       map(({ data }: any) => new User(data))

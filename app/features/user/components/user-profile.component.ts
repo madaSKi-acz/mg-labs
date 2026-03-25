@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from '../../../core/auth.service';
 import { UserProfileService } from '../services/user.service';
+import { LocalStorageService } from '../../../core/local-storage.service';
 
 /**
  * User Profile Component
@@ -17,12 +18,17 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   isEditing = false;
   isLoading = false;
   error: string | null = null;
+  preferences: any = {};
   private readonly subscriptions = new Subscription();
 
-  constructor(private readonly userProfileService: UserProfileService) { }
+  constructor(
+    private readonly userProfileService: UserProfileService,
+    private readonly localStorageService: LocalStorageService
+  ) { }
 
   ngOnInit(): void {
     this.loadProfile();
+    this.loadPreferences();
   }
 
   /**
@@ -45,6 +51,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Load user preferences
+   */
+  private loadPreferences(): void {
+    this.preferences = this.localStorageService.getUserPreferences();
+  }
+
+  /**
+   * Save preferences
+   */
+  savePreferences(): void {
+    this.localStorageService.saveUserPreferences(this.preferences);
+  }
+
+  /**
    * Toggle edit mode
    */
   toggleEditMode(): void {
@@ -63,6 +83,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         next: (updatedUser: any) => {
           this.user = updatedUser;
           this.isEditing = false;
+          this.savePreferences(); // Save preferences when profile is saved
         },
         error: (err: any) => {
           this.error = 'Failed to update profile';

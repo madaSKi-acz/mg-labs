@@ -1,5 +1,7 @@
 .admin-dashboard {
-  padding: 20px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .stats-grid {
@@ -10,15 +12,45 @@
 }
 
 .stat-card {
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
   padding: 20px;
   text-align: center;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card h3 {
+  margin: 0 0 8px;
+  color: var(--text-primary);
 }
 
 .stat-value {
-  font-size: 32px;
-  font-weight: bold;
-  color: #007bff;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2563eb;
 }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--light-blue);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #bfdbfe;
+}
+

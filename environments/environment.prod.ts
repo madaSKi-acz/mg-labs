@@ -4,5 +4,6 @@
 export const environment = {
   production: true,
   apiUrl: 'https://api.example.com',
-  appName: 'MG Labs'
+  appName: 'MG Labs',
+  useMock: false
 };

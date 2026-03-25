@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { MockDataService } from '../../../core/mock-data.service';
 
 /**
  * Product Model
@@ -72,12 +74,19 @@ export class ProductService {
   private readonly apiUrl = '/api/products';
   private readonly productsCache$ = new BehaviorSubject<Product[]>([]);
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient, private readonly mockDataService: MockDataService) { }
 
   /**
    * Get all products
    */
   getAll(page: number = 1, limit: number = 10, category?: string): Observable<any> {
+    if (environment.useMock) {
+      return this.mockDataService.getProducts(page, limit, category).pipe(
+        tap(products => this.productsCache$.next(products)),
+        map(products => ({ data: products }))
+      );
+    }
+
     let params = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString());
@@ -98,6 +107,9 @@ export class ProductService {
    * Get product by ID
    */
   getById(id: string): Observable<Product> {
+    if (environment.useMock) {
+      return this.mockDataService.getProductById(id);
+    }
     return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
       map(({ data }) => new Product(data))
     );
@@ -107,6 +119,9 @@ export class ProductService {
    * Create new product
    */
   create(productData: Partial<IProduct>): Observable<Product> {
+    if (environment.useMock) {
+      return this.mockDataService.createProduct(productData);
+    }
     return this.http.post<any>(this.apiUrl, productData).pipe(
       map(({ data }) => new Product(data))
     );
@@ -116,6 +131,9 @@ export class ProductService {
    * Update product
    */
   update(id: string, productData: Partial<IProduct>): Observable<Product> {
+    if (environment.useMock) {
+      return this.mockDataService.updateProduct(id, productData);
+    }
     return this.http.put<any>(`${this.apiUrl}/${id}`, productData).pipe(
       map(({ data }) => new Product(data))
     );
@@ -125,6 +143,9 @@ export class ProductService {
    * Delete product
    */
   delete(id: string): Observable<void> {
+    if (environment.useMock) {
+      return this.mockDataService.deleteProduct(id);
+    }
     return this.http.delete<any>(`${this.apiUrl}/${id}`).pipe(
       map(() => undefined)
     );
@@ -134,6 +155,9 @@ export class ProductService {
    * Search products
    */
   search(query: string): Observable<Product[]> {
+    if (environment.useMock) {
+      return this.mockDataService.searchProducts(query);
+    }
     return this.http.get<any>(`${this.apiUrl}/search?q=${query}`).pipe(
       map(({ data }) => data.map((p: IProduct) => new Product(p)))
     );

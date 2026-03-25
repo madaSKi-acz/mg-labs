@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { MockDataService } from '../../../core/mock-data.service';
 import { User } from '../../../core/auth.service';
 
 /**
@@ -14,12 +16,15 @@ import { User } from '../../../core/auth.service';
 export class UserProfileService {
   private readonly apiUrl = '/api/user';
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient, private readonly mockDataService: MockDataService) { }
 
   /**
    * Get user profile
    */
   getProfile(): Observable<User> {
+    if (environment.useMock) {
+      return this.mockDataService.getUserProfile();
+    }
     return this.http.get<any>(`${this.apiUrl}/profile`).pipe(
       map(({ data }: any) => new User(data))
     );
@@ -29,6 +34,9 @@ export class UserProfileService {
    * Update user profile
    */
   updateProfile(profileData: any): Observable<User> {
+    if (environment.useMock) {
+      return this.mockDataService.updateUserProfile(profileData);
+    }
     return this.http.put<any>(`${this.apiUrl}/profile`, profileData).pipe(
       map(({ data }: any) => new User(data))
     );

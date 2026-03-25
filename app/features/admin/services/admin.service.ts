@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
+import { MockDataService } from '../../../core/mock-data.service';
 
 /**
  * Admin Dashboard Data
@@ -44,12 +46,15 @@ export class DashboardStats implements IDashboardStats {
 export class AdminService {
   private readonly apiUrl = '/api/admin';
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient, private readonly mockDataService: MockDataService) { }
 
   /**
    * Get dashboard statistics
    */
   getDashboardStats(): Observable<DashboardStats> {
+    if (environment.useMock) {
+      return this.mockDataService.getDashboardStats();
+    }
     return this.http.get<any>(`${this.apiUrl}/dashboard`).pipe(
       map(({ data }) => new DashboardStats(data))
     );
@@ -59,6 +64,11 @@ export class AdminService {
    * Get user analytics
    */
   getUserAnalytics(period: string = 'month'): Observable<any> {
+    if (environment.useMock) {
+      return this.mockDataService.getDashboardStats().pipe(
+        map(stats => ({ period, activeUsers: stats.totalUsers, newUsers: 18 }))
+      );
+    }
     return this.http.get(`${this.apiUrl}/analytics/users?period=${period}`);
   }
 
@@ -66,6 +76,11 @@ export class AdminService {
    * Get revenue analytics
    */
   getRevenueAnalytics(period: string = 'month'): Observable<any> {
+    if (environment.useMock) {
+      return this.mockDataService.getDashboardStats().pipe(
+        map(stats => ({ period, revenue: stats.totalRevenue, growth: 0.12 }))
+      );
+    }
     return this.http.get(`${this.apiUrl}/analytics/revenue?period=${period}`);
   }
 
@@ -73,6 +88,9 @@ export class AdminService {
    * Get system logs
    */
   getSystemLogs(page: number = 1): Observable<any> {
+    if (environment.useMock) {
+      return of({ logs: [{ id: 1, message: 'Mock log entry', date: new Date().toISOString() }] });
+    }
     return this.http.get(`${this.apiUrl}/logs?page=${page}`);
   }
 
@@ -80,6 +98,9 @@ export class AdminService {
    * Clear cache
    */
   clearCache(): Observable<any> {
+    if (environment.useMock) {
+      return of({ success: true });
+    }
     return this.http.post(`${this.apiUrl}/cache/clear`, {});
   }
 }

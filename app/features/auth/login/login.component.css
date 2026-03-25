@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: var(--light-gray);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
@@ -22,12 +22,12 @@
 
 /* Brand Section */
 .login-brand {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: var(--light-blue);
   padding: 60px 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text-primary);
 }
 
 .brand-content {
@@ -35,30 +35,30 @@
 }
 
 .brand-logo {
-  width: 100px;
-  height: 100px;
   margin: 0 auto 30px;
 }
 
-.brand-logo svg {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2));
+.logo-icon {
+  font-size: 100px;
+  width: 100px;
+  height: 100px;
+  color: var(--text-primary);
 }
 
 .brand-title {
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 600;
   margin: 0 0 10px 0;
   letter-spacing: -0.5px;
+  color: var(--text-primary);
 }
 
 .brand-subtitle {
   font-size: 1.1rem;
-  opacity: 0.95;
+  opacity: 0.8;
   margin: 0 0 50px 0;
-  font-weight: 300;
-  color: #ffffff;
+  font-weight: 400;
+  color: var(--text-primary);
 }
 
 .brand-features {
@@ -72,18 +72,12 @@
   align-items: center;
   gap: 12px;
   font-size: 1rem;
+  color: var(--text-primary);
 }
 
 .feature-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  font-size: 0.8rem;
-  flex-shrink: 0;
+  color: var(--text-primary);
+  font-size: 24px;
 }
 
 /* Form Section */
@@ -106,14 +100,14 @@
 
 .form-header h1 {
   font-size: 2rem;
-  color: #0f172a;
+  color: var(--text-primary);
   margin: 0 0 10px 0;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .form-header p {
   font-size: 1rem;
-  color: #718096;
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -152,8 +146,8 @@
 .form-label {
   display: block;
   font-size: 0.95rem;
-  font-weight: 600;
-  color: #2d3748;
+  font-weight: 500;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
@@ -167,37 +161,36 @@
 .input-icon {
   position: absolute;
   left: 16px;
-  font-size: 1.1rem;
+  font-size: 20px;
   pointer-events: none;
-  color: #cbd5e0;
+  color: var(--text-secondary);
+  z-index: 1;
 }
 
 .form-input {
   width: 100%;
-  padding: 12px 16px 12px 44px;
-  border: 2px solid #e2e8f0;
+  padding: 12px 16px 12px 48px;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 0.95rem;
-  color: #2d3748;
-  background: #f7fafc;
-  transition: all 0.3s ease;
+  color: var(--text-primary);
+  background: var(--white);
+  transition: all 0.2s ease;
   font-family: inherit;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #667eea;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--light-blue);
+  box-shadow: 0 0 0 2px rgba(219, 234, 254, 0.5);
 }
 
 .form-input.has-error {
   border-color: #dc2626;
-  background: #fff5f5;
 }
 
 .form-input.has-error:focus {
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
 }
 
 /* Error Text */
@@ -218,14 +211,15 @@
 
 .forgot-password {
   font-size: 0.85rem;
-  color: #667eea;
+  color: var(--text-primary);
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
+  font-weight: 500;
 }
 
 .forgot-password:hover {
-  color: #5568d3;
+  color: var(--light-blue);
   text-decoration: underline;
 }
 
@@ -236,17 +230,16 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.1rem;
   padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #cbd5e0;
-  transition: color 0.3s ease;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
 }
 
 .toggle-password:hover {
-  color: #67727e;
+  color: var(--text-primary);
 }
 
 /* Checkbox Group */
@@ -266,7 +259,7 @@
 
 .checkbox-label {
   font-size: 0.95rem;
-  color: #4a5568;
+  color: var(--text-primary);
   cursor: pointer;
   user-select: none;
 }
@@ -275,25 +268,21 @@
 .btn-login {
   width: 100%;
   padding: 12px 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
+  background-color: var(--light-blue);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
 }
 
 .btn-login:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-}
-
-.btn-login:active:not(:disabled) {
-  transform: translateY(0);
+  background-color: #bfdbfe;
+  box-shadow: var(--shadow);
 }
 
 .btn-login:disabled {
@@ -356,20 +345,19 @@
 .btn-register {
   width: 100%;
   padding: 12px 16px;
-  background: #f7fafc;
-  color: #667eea;
-  border: 2px solid #e2e8f0;
+  background: var(--white);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .btn-register:hover {
-  background: #667eea;
-  color: white;
-  border-color: #667eea;
+  background-color: var(--light-gray);
+  box-shadow: var(--shadow);
 }
 
 /* Footer */
@@ -382,21 +370,54 @@
 
 .footer-text {
   font-size: 0.85rem;
-  color: #718096;
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.6;
 }
 
 .footer-link {
-  color: #5568d3;
+  color: var(--text-primary);
   text-decoration: none;
-  transition: color 0.3s ease;
-  font-weight: 600;
+  transition: color 0.2s ease;
+  font-weight: 500;
 }
 
 .footer-link:hover {
-  color: #5568d3;
+  color: var(--light-blue);
   text-decoration: underline;
+}
+
+/* Demo Login */
+.demo-login {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.demo-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.demo-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-demo {
+  padding: 8px 16px;
+  background-color: var(--light-gray);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.btn-demo:hover {
+  background-color: var(--light-blue);
 }
 
 /* Responsive */
