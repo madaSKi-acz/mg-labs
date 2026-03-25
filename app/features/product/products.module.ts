@@ -5,6 +5,7 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { ProductListComponent } from './components/product-list.component';
 import { ProductDetailsComponent } from './components/product-details.component';
 import { ProductFormComponent } from './components/product-form.component';
+import { SharedModule } from '../../shared/shared.module';
 
 /**
  * Products Module
@@ -12,6 +13,6 @@ import { ProductFormComponent } from './components/product-form.component';
  */
 @NgModule({
   declarations: [ProductListComponent, ProductDetailsComponent, ProductFormComponent],
-  imports: [CommonModule, FormsModule, ProductsRoutingModule]
+  imports: [CommonModule, FormsModule, ProductsRoutingModule, SharedModule]
 })
 export class ProductsModule { }

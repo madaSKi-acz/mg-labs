@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/auth.service';
+import { AuthService, User } from '../../core/auth.service';
+import { ProductService } from '../product/services/product.service';
 
 /**
  * Dashboard Component
- * Displays welcome message and navigation
- * Redirects to login if not authenticated
+ * Displays welcome message and key metrics
  */
 @Component({
   selector: 'app-dashboard',
@@ -13,21 +13,45 @@ import { AuthService } from '../../core/auth.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  isAuthenticated = false;
+  currentUser: User | null = null;
+  isLoading = true;
+  
+  // Stats
+  totalProducts = 0;
+  totalUsers = 0;
+  totalRevenue = 0;
+  activeOrders = 0;
 
-  constructor(private readonly authService: AuthService, private readonly router: Router) { }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly productService: ProductService,
+    private readonly router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.checkAuthStatus();
+    this.loadDashboardStats();
   }
 
-  private checkAuthStatus(): void {
-    this.isAuthenticated = this.authService.isAuthenticated();
-  }
+  private loadDashboardStats(): void {
+    this.currentUser = this.authService.getCurrentUser();
+    
+    // Load products count
+    this.productService.getAll(1, 1000).subscribe({
+      next: (response) => {
+        this.totalProducts = response.data.length;
+      },
+      error: (err) => {
+        console.error('Failed to load products:', err);
+      }
+    });
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/dashboard']);
+    // Simulate loading other stats (in production, call real API)
+    setTimeout(() => {
+      this.totalUsers = 1240;
+      this.totalRevenue = 45600;
+      this.activeOrders = 28;
+      this.isLoading = false;
+    }, 500);
   }
 
   navigateTo(path: string): void {

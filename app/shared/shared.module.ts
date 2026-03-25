@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { StatCardComponent } from './components/stat-card/stat-card.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 import { DebounceDirective } from './directives/debounce.directive';
 import { SafeHtmlPipe, CurrencyFormatterPipe, TruncatePipe } from './pipes/custom.pipes';
 
@@ -16,6 +18,8 @@ import { SafeHtmlPipe, CurrencyFormatterPipe, TruncatePipe } from './pipes/custo
   declarations: [
     NavbarComponent,
     SidebarComponent,
+    StatCardComponent,
+    ProductCardComponent,
     DebounceDirective,
     SafeHtmlPipe,
     CurrencyFormatterPipe,
@@ -29,6 +33,8 @@ import { SafeHtmlPipe, CurrencyFormatterPipe, TruncatePipe } from './pipes/custo
   exports: [
     NavbarComponent,
     SidebarComponent,
+    StatCardComponent,
+    ProductCardComponent,
     DebounceDirective,
     SafeHtmlPipe,
     CurrencyFormatterPipe,
