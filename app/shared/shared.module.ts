@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DebounceDirective } from './directives/debounce.directive';
 import { SafeHtmlPipe, CurrencyFormatterPipe, TruncatePipe } from './pipes/custom.pipes';
 
@@ -11,11 +10,11 @@ import { SafeHtmlPipe, CurrencyFormatterPipe, TruncatePipe } from './pipes/custo
  * Shared Module
  * Contains shared components, pipes, and directives
  * Can be imported by any feature module
+ * SidebarComponent is now standalone
  */
 @NgModule({
   declarations: [
     NavbarComponent,
-    SidebarComponent,
     DebounceDirective,
     SafeHtmlPipe,
     CurrencyFormatterPipe,
@@ -28,7 +27,6 @@ import { SafeHtmlPipe, CurrencyFormatterPipe, TruncatePipe } from './pipes/custo
   ],
   exports: [
     NavbarComponent,
-    SidebarComponent,
     DebounceDirective,
     SafeHtmlPipe,
     CurrencyFormatterPipe,

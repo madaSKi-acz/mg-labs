@@ -1,11 +1,59 @@
-<div class="app-container" [class.login-layout]="!showLayout">
-  <app-navbar *ngIf="isAuthenticated && showLayout" [orientation]="menuOrientation"></app-navbar>
+<div class="min-h-screen bg-slate-50" [class]="!showLayout ? 'login-layout' : 'app-layout'">
+  @if (isAuthenticated() && showLayout()) {
+    <!-- Sticky Header -->
+    <header class="sticky top-0 z-40 w-full h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/60">
+      <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <button
+            (click)="toggleOrientation()"
+            class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 transition-all duration-300 active:scale-95"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              @if (menuOrientation() === 'vertical') {
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              } @else {
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path>
+              }
+            </svg>
+          </button>
+          <h1 class="text-xl font-semibold tracking-tight text-slate-900">MG Labs</h1>
+        </div>
 
-  <div class="app-content" [class.full-height]="true" [class.vertical-mode]="menuOrientation === 'vertical'">
-    <app-sidebar *ngIf="isAuthenticated && showLayout && menuOrientation === 'vertical'" class="sidebar"></app-sidebar>
+        <div class="flex items-center space-x-4">
+          <button class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 transition-all duration-300 active:scale-95">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.868 12.683A17.925 17.925 0 0112 21c7.962 0 12-1.21 12-2.683m-12 2.683a17.925 17.925 0 01-7.132-8.317M12 21c4.411 0 8-4.03 8-9s-3.589-9-8-9-8 4.03-8 9a9.06 9.06 0 001.832 5.683L4 21l4.868-8.317z"></path>
+            </svg>
+          </button>
 
-    <main class="main-content">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
+          @if (currentUser()) {
+            <div class="flex items-center space-x-2">
+              <span class="text-sm text-slate-700">{{ currentUser()!.getFullName() }}</span>
+              <button
+                (click)="logout()"
+                class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-all duration-300 active:scale-95"
+              >
+                Logout
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex min-h-[calc(100vh-4rem)]">
+      @if (menuOrientation() === 'vertical') {
+        <app-sidebar class="w-64 flex-shrink-0"></app-sidebar>
+      }
+
+      <main class="flex-1 overflow-auto">
+        <div class="p-6">
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+    </div>
+  } @else {
+    <router-outlet></router-outlet>
+  }
 </div>

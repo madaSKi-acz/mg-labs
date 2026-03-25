@@ -1,28 +1,20 @@
-<nav class="navbar">
-  <div class="navbar-left">
-    <div class="navbar-brand">
-      <h1>MG Labs</h1>
+<nav class="bg-white/80 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex h-16 items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <button (click)="toggleOrientation()" class="btn btn-secondary">
+          <mat-icon class="text-sm">{{ orientation === 'vertical' ? 'view_sidebar' : 'view_list' }}</mat-icon>
+        </button>
+        <h1 class="text-xl font-semibold tracking-tight">MG Labs</h1>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <div class="navbar-user" *ngIf="currentUser">
+          <mat-icon class="text-sm">person</mat-icon>
+          <span class="user-name">{{ currentUser.getFullName() }}</span>
+        </div>
+        <button *ngIf="currentUser" (click)="logout()" class="btn btn-danger">Logout</button>
+      </div>
     </div>
-  </div>
-
-  <div class="navbar-center" *ngIf="orientation === 'horizontal'">
-    <a (click)="navigateTo('/dashboard')" class="navbar-link">Dashboard</a>
-    <a (click)="navigateTo('/products')" class="navbar-link">Products</a>
-    <a (click)="navigateTo('/admin')" class="navbar-link">Admin</a>
-    <a (click)="navigateTo('/user/profile')" class="navbar-link">Profile</a>
-  </div>
-
-  <div class="navbar-right">
-    <button class="btn-mode" (click)="toggleOrientation()">
-      {{ orientation === 'vertical' ? 'Switch to Horizontal' : 'Switch to Vertical' }}
-    </button>
-
-    <div class="navbar-user" *ngIf="currentUser">
-      <mat-icon>person</mat-icon>
-      <span class="user-name">{{ currentUser.getFullName() }}</span>
-      <span class="user-role">({{ currentUser.role }})</span>
-    </div>
-
-    <button (click)="logout()" class="btn-logout">Logout</button>
   </div>
 </nav>

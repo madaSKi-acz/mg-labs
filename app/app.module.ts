@@ -18,11 +18,11 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
  * - Configures HTTP interceptors for global request/response handling
  */
 @NgModule({
-  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    AppComponent,
     CoreModule,
     SharedModule,
     DashboardModule,

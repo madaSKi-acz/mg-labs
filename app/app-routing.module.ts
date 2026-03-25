@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/gaurds/auth.guard';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { LoginComponent } from './features/auth/login/login.component';
+import { OtpVerificationComponent } from './features/auth/otp-verification/otp-verification.component';
 
 /**
  * Application Routing Configuration
@@ -12,12 +13,21 @@ import { LoginComponent } from './features/auth/login/login.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'auth',
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'otp',
+        component: OtpVerificationComponent
+      }
+    ]
   },
   {
     path: 'dashboard',
@@ -40,7 +50,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'login'
+    redirectTo: 'auth/login'
   }
 ];
 

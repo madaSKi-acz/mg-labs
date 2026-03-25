@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, User } from '../../core/auth.service';
-import { ProductService } from '../product/services/product.service';
+import { ProductService, Product } from '../product/services/product.service';
 
 /**
  * Dashboard Component
@@ -20,6 +20,8 @@ export class DashboardComponent implements OnInit {
   totalUsers = 0;
   totalRevenue = 0;
   activeOrders = 0;
+  recentProducts: Product[] = [];
+  loading = false;
 
   constructor(private readonly authService: AuthService, private readonly productService: ProductService, private readonly router: Router) { }
 
@@ -31,11 +33,14 @@ export class DashboardComponent implements OnInit {
     this.currentUser = this.authService.getCurrentUser();
     this.isAuthenticated = this.authService.isAuthenticated();
 
-    this.productService.getAll(1, 100).subscribe((response) => {
+    this.loading = true;
+    this.productService.getAll(1, 8).subscribe((response) => {
       this.totalProducts = response.data.length;
+      this.recentProducts = response.data.slice(0, 4); // Show first 4 as recent
       this.totalUsers = 1200;
       this.totalRevenue = 815000;
       this.activeOrders = 37;
+      this.loading = false;
     });
   }
 

@@ -1,20 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { LoginComponent } from './login/login.component';
 
 /**
  * Auth Module
- * Encapsulates authentication related components (login, register, etc.)
+ * Feature module for authentication operations
+ * Components are now standalone and manage their own dependencies
  */
 @NgModule({
-  declarations: [LoginComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatIconModule
-  ],
-  exports: [LoginComponent]
+  imports: [CommonModule]
 })
 export class AuthModule { }

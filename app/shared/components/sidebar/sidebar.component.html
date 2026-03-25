@@ -1,11 +1,21 @@
-<aside class="sidebar">
-  <div class="sidebar-header">
-    <h3>Navigation</h3>
+<aside class="w-64 bg-white/80 backdrop-blur-md border-r border-slate-200/60 h-screen fixed left-0 top-0 z-30">
+  <div class="p-6">
+    <h2 class="text-lg font-semibold tracking-tight">MG Labs</h2>
   </div>
-  <nav class="sidebar-nav">
-    <a *ngFor="let item of menuItems" [routerLink]="item.link" class="sidebar-link" routerLinkActive="active">
-      <mat-icon class="icon">{{ item.icon }}</mat-icon>
-      <span class="label">{{ item.label }}</span>
-    </a>
+  <nav class="px-3">
+    <div class="mb-4">
+      <p class="px-3 text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">General</p>
+      <a *ngFor="let item of generalItems" [routerLink]="item.link" class="sidebar-link" routerLinkActive="active">
+        <mat-icon class="icon">{{ item.icon }}</mat-icon>
+        <span class="label">{{ item.label }}</span>
+      </a>
+    </div>
+    <div class="mb-4">
+      <p class="px-3 text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">Management</p>
+      <a *ngFor="let item of managementItems" [routerLink]="item.link" class="sidebar-link" routerLinkActive="active">
+        <mat-icon class="icon">{{ item.icon }}</mat-icon>
+        <span class="label">{{ item.label }}</span>
+      </a>
+    </div>
   </nav>
 </aside>

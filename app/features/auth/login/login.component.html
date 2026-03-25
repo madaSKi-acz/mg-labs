@@ -1,141 +1,102 @@
-<div class="login-wrapper">
-  <div class="login-container">
-    <!-- Left Side - Brand Section -->
-    <div class="login-brand">
-      <div class="brand-content">
-        <div class="brand-logo">
-          <mat-icon class="logo-icon">science</mat-icon>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <div class="card p-8 shadow-lg">
+      <div class="text-center mb-8">
+        <div class="flex justify-center mb-4">
+          <div class="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center">
+            <mat-icon class="text-blue-600 text-2xl">science</mat-icon>
+          </div>
         </div>
-        <h2 class="brand-title">MG Labs</h2>
-        <p class="brand-subtitle">Enterprise Application Platform</p>
-        <div class="brand-features">
-          <div class="feature">
-            <mat-icon class="feature-icon">check_circle</mat-icon>
-            <span>Secure Authentication</span>
-          </div>
-          <div class="feature">
-            <mat-icon class="feature-icon">architecture</mat-icon>
-            <span>Modern Architecture</span>
-          </div>
-          <div class="feature">
-            <mat-icon class="feature-icon">business</mat-icon>
-            <span>Enterprise Ready</span>
-          </div>
+        <h1 class="text-2xl font-semibold tracking-tight">Welcome back</h1>
+        <p class="text-sm text-muted-foreground">Sign in to your MG Labs account</p>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+        <div class="flex items-center space-x-2">
+          <mat-icon class="text-red-500 text-sm">warning</mat-icon>
+          <span class="text-sm text-red-700">{{ errorMessage }}</span>
         </div>
       </div>
-    </div>
 
-    <!-- Right Side - Login Form -->
-    <div class="login-form-section">
-      <div class="form-wrapper">
-        <div class="form-header">
-          <h1>Welcome Back</h1>
-          <p>Sign in to your account</p>
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="space-y-4">
+        <!-- Email Input -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+          <div class="relative">
+            <mat-icon class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm">email</mat-icon>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              placeholder="name@example.com"
+            />
+          </div>
+          <span *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched" class="text-xs text-red-600 mt-1 block">
+            Email is required
+          </span>
+          <span *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched" class="text-xs text-red-600 mt-1 block">
+            Please enter a valid email
+          </span>
         </div>
 
-        <!-- Error Message -->
-        <div *ngIf="errorMessage" class="alert alert-danger">
-          <mat-icon class="alert-icon">warning</mat-icon>
-          {{ errorMessage }}
+        <!-- Password Input -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
+            <a (click)="navigateForgotPassword()" class="text-xs text-blue-600 hover:text-blue-800">Forgot?</a>
+          </div>
+          <div class="relative">
+            <mat-icon class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm">lock</mat-icon>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              formControlName="password"
+              class="w-full pl-10 pr-10 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              placeholder="Enter your password"
+            />
+            <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600" (click)="togglePasswordVisibility()">
+              <mat-icon class="text-sm">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </div>
+          <span *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched" class="text-xs text-red-600 mt-1 block">
+            Password is required
+          </span>
         </div>
 
-        <!-- Login Form -->
-        <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="form">
-          <!-- Email Input -->
-          <div class="form-group">
-            <label for="email" class="form-label">Email Address</label>
-            <div class="input-wrapper">
-              <mat-icon class="input-icon">email</mat-icon>
-              <input
-                type="email"
-                id="email"
-                formControlName="email"
-                class="form-input"
-                placeholder="name@example.com"
-                [class.has-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-              />
-            </div>
-            <span *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched" class="error-text">
-              Email is required
-            </span>
-            <span *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched" class="error-text">
-              Please enter a valid email
-            </span>
-          </div>
-
-          <!-- Password Input -->
-          <div class="form-group">
-            <div class="password-header">
-              <label for="password" class="form-label">Password</label>
-              <a (click)="navigateForgotPassword()" class="forgot-password">Forgot?</a>
-            </div>
-            <div class="input-wrapper">
-              <mat-icon class="input-icon">lock</mat-icon>
-              <input
-                [type]="showPassword ? 'text' : 'password'"
-                id="password"
-                formControlName="password"
-                class="form-input"
-                placeholder="Enter your password"
-                [class.has-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-              />
-              <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
-                <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-              </button>
-            </div>
-            <span *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched" class="error-text">
-              Password is required
-            </span>
-            <span *ngIf="loginForm.get('password')?.errors?.['minlength'] && loginForm.get('password')?.touched" class="error-text">
-              Password must be at least 6 characters
-            </span>
-          </div>
-
-          <!-- Remember Me -->
-          <div class="form-group checkbox-group">
-            <input type="checkbox" id="rememberMe" formControlName="rememberMe" class="form-checkbox" />
-            <label for="rememberMe" class="checkbox-label">Keep me signed in</label>
-          </div>
-
-          <!-- Submit Button -->
-          <button
-            type="submit"
-            class="btn-login"
-            [disabled]="loginForm.invalid || isLoading"
-            [class.loading]="isLoading"
-          >
-            {{ isLoading ? 'Signing in...' : 'Sign In' }}
-          </button>
-        </form>
-
-        <!-- Demo Login Section -->
-        <div class="demo-login">
-          <p class="demo-text">Demo Accounts:</p>
-          <div class="demo-buttons">
-            <button (click)="demoLogin('admin@mg.com', 'admin123')" class="btn-demo">Admin Login</button>
-            <button (click)="demoLogin('jane@mg.com', 'user123')" class="btn-demo">User Login</button>
-          </div>
+        <!-- Remember Me -->
+        <div class="flex items-center">
+          <input type="checkbox" id="rememberMe" formControlName="rememberMe" class="h-4 w-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500" />
+          <label for="rememberMe" class="ml-2 text-sm text-slate-700">Keep me signed in</label>
         </div>
 
-        <!-- Divider -->
-        <div class="divider">
-          <span>New to MG Labs?</span>
-        </div>
-
-        <!-- Register Link -->
-        <button type="button" class="btn-register" (click)="navigateToRegister()">
-          Create an account
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="w-full btn btn-primary"
+          [disabled]="loginForm.invalid || isLoading"
+        >
+          {{ isLoading ? 'Signing in...' : 'Sign In' }}
         </button>
+      </form>
 
-        <!-- Footer -->
-        <div class="form-footer">
-          <p class="footer-text">
-            By signing in, you agree to our
-            <a href="#" class="footer-link">Terms of Service</a>
-            and
-            <a href="#" class="footer-link">Privacy Policy</a>
-          </p>
+      <!-- Demo Login Section -->
+      <div class="mt-6 pt-6 border-t border-slate-200">
+        <p class="text-xs text-muted-foreground text-center mb-3">Demo Accounts</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button (click)="demoLogin('admin@mg.com', 'admin123')" class="btn btn-secondary text-xs">Admin</button>
+          <button (click)="demoLogin('jane@mg.com', 'user123')" class="btn btn-secondary text-xs">User</button>
         </div>
+      </div>
+
+      <!-- Register Link -->
+      <div class="mt-6 text-center">
+        <p class="text-sm text-muted-foreground">
+          New to MG Labs?
+          <a (click)="navigateToRegister()" class="text-blue-600 hover:text-blue-800 font-medium">Create an account</a>
+        </p>
       </div>
     </div>
   </div>
